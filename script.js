@@ -1,9 +1,6 @@
-let playerSelection = 'PaPer';
-
-let ComputerSelection = getComputerChoice();
 
 function playRound(playerSelection,ComputerSelection){
-    console.log('computer choice is:' +ComputerSelection);
+    console.log('\ncomputer choice is:' +ComputerSelection);
     console.log('Player choice is:' +playerSelection);
     if(playerSelection.toLowerCase()==='rock'){
         if(ComputerSelection==='rock') {
@@ -46,4 +43,13 @@ function getComputerChoice() {
     return result;
 
 }
- playRound(playerSelection,ComputerSelection);
+
+function game() {
+    for(i=0;i<5;i++) {
+     let playerSelection = prompt();
+     let ComputerSelection = getComputerChoice();
+
+    playRound(playerSelection,ComputerSelection);
+    }
+}
+game();
