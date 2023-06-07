@@ -1,6 +1,4 @@
 
-// dom
-
 const body = document.body;
 body.style.display = "flex";
 body.style.flexDirection = "column";
@@ -8,7 +6,6 @@ body.style.alignItems = "center";
 body.style.margin = "0";
 body.style.height = "100vh";
 
-// body.style.backgroundColor = "bisque";
 
 const content = document.querySelector("#content");
 content.style.display = 'flex';
@@ -68,9 +65,6 @@ buttons2.forEach(button => {
     })
     
 });
-
-
-
 
 let computerRoundWon = 0;
 let userRoundWon = 0;
@@ -187,7 +181,6 @@ function roundsWon(winner) {
         
         let winnerDiv = document.querySelector('.winner');
         let whoWon = document.createElement('h1'); 
-        
 
         if(userRoundWon==5) {
             winner = 'user';
@@ -199,8 +192,6 @@ function roundsWon(winner) {
             winner ='computer';
             whoWon.textContent = winnerPlaceHolder +"computer";
             winnerDiv.style.display = 'flex';
-            
-
         }
         winnerDiv.append(whoWon);
         return true;
