@@ -19,7 +19,7 @@ content.style.height = '100vh';
 content.style.width = "80%";
 
 const buttons = document.querySelector(".buttons")
-buttons.style.margin = "100px 0px";
+buttons.style.margin = "40px 0px";
 buttons.style.display = "flex";
 buttons.style.justifyContent = "center";
 buttons.style.gap = '40px';
@@ -28,6 +28,7 @@ const result = document.querySelector(".result");
 result.style.display = "flex";
 result.style.justifyContent = 'center';
 result.style.alignItems = 'center';
+result.style.margin ="100px";
 result.style.gap = '100px';
 
 
@@ -43,9 +44,12 @@ resultCenter.style.display = 'none';
 let resultRight = document.createElement('h1');
 resultRight.textContent = "COMPUTER WON: ";
 
-result.style.backgroundColor = "rgba(0,0,0,0.4)";
-result.style.height = "450px";
-result.style.padding = "100px";
+result.style.backgroundColor = "rgba(0, 128, 0, 0.4)";
+result.style.border = "4px dashed green"
+
+result.style.height = "250px";
+result.style.width = "110%";
+result.style.padding = "50px";
 
 result.append(resultLeft);
 result.append(resultCenter);
@@ -88,6 +92,8 @@ function playRound(playerSelection,ComputerSelection){
 
     } else if(playerSelection==='paper') {
         if(ComputerSelection==='paper') {
+            resultCenter.style.display = 'flex';
+
         }else if(ComputerSelection==='rock'){
             roundsWon('user');
             resultCenter.style.display = 'none';
@@ -138,7 +144,8 @@ let playNew = function() {
     playAgainButton.textContent = "PLAY AGAIN?";
     playAgainButton.style.width = "400px";
     playAgainButton.style.height = "200px";
-    playAgainButton.style.backgroundColor = "rgba(0,0,0,0.4)";
+    playAgainButton.style.border = "4px dashed green"
+    playAgainButton.style.backgroundColor = "rgba(0, 128, 0, 0.4)";
     buttons.style.display = 'none';
     result.style.display = 'none';
     content.append(playAgainButton);
