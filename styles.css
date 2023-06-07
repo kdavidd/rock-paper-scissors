@@ -3,6 +3,15 @@ button.btn {
     width: 150px;
     border: 1px solid black;
     border-radius: 20px;
+    color: wheat;
+    background-color: rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+button:hover {
+    scale: 1.5;
+    transition: 0.5s;
+    font-size: 25px;
 }
 
 .winner {
@@ -15,4 +24,5 @@ body {
     background-repeat: no-repeat;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 20px;
+    color: wheat;
 }

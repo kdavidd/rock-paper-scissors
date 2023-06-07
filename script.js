@@ -13,35 +13,42 @@ body.style.height = "100vh";
 const content = document.querySelector("#content");
 content.style.display = 'flex';
 content.style.flexDirection = 'column';
-content.style.flexWrap = "wrap";
+content.style.alignItems = 'center';
 content.style.margin = '0';
-
+content.style.height = '100vh';
 content.style.width = "80%";
 
 const buttons = document.querySelector(".buttons")
-buttons.style.margin = "50px 0px";
+buttons.style.margin = "100px 0px";
 buttons.style.display = "flex";
 buttons.style.justifyContent = "center";
-buttons.style.gap = '50px';
+buttons.style.gap = '40px';
 
 const result = document.querySelector(".result");
 result.style.display = "flex";
 result.style.justifyContent = 'center';
 result.style.alignItems = 'center';
-
 result.style.gap = '100px';
+
 
 let resultLeft = document.createElement('h1');
 resultLeft.textContent = "PLAYER WON: ";
 
+let resultCenter = document.createElement('h1');
+resultCenter.textContent = "DRAW";
+resultCenter.style.fontSize = "80px";
+resultCenter.style.display = 'none';
+
+
 let resultRight = document.createElement('h1');
 resultRight.textContent = "COMPUTER WON: ";
 
-
 result.style.backgroundColor = "rgba(0,0,0,0.4)";
 result.style.height = "450px";
+result.style.padding = "100px";
 
 result.append(resultLeft);
+result.append(resultCenter);
 result.append(resultRight);
 
 const buttons2 = document.querySelectorAll(".btn");
@@ -49,12 +56,11 @@ const buttons2 = document.querySelectorAll(".btn");
 let playerSelection = '';
 
 buttons2.forEach(button => {
-    button.style.backgroundColor = 'red';
-    button.style.cursor = 'pointer';
-
     button.addEventListener('click', () => {
         playerSelection = button.id;
-        game();
+        let ComputerSelection = getComputerChoice();        
+        playRound(playerSelection,ComputerSelection);
+        
     })
     
 });
@@ -66,44 +72,38 @@ let computerRoundWon = 0;
 let userRoundWon = 0;
 
 function playRound(playerSelection,ComputerSelection){
-    console.log('\ncomputer choice is:' +ComputerSelection);
-    console.log('Player choice is:' +playerSelection);
+    // console.log('\ncomputer choice is:' +ComputerSelection);
+    // console.log('Player choice is:' +playerSelection);
     if(playerSelection==='rock'){
         if(ComputerSelection==='rock') {
-            console.log('DRAW');
+            resultCenter.style.display = 'flex';
+
         }else if(ComputerSelection==='paper'){
-            console.log('You lost! Paper beats rock!');
             roundsWon('computer');
-
+            resultCenter.style.display = 'none';
         }else {
-            console.log('You won! Rock beats scissors!');
             roundsWon('user');
-
+            resultCenter.style.display = 'none';
         }
 
     } else if(playerSelection==='paper') {
         if(ComputerSelection==='paper') {
-            console.log('DRAW');
         }else if(ComputerSelection==='rock'){
-            console.log('You won! Paper beats rock!');
             roundsWon('user');
-
+            resultCenter.style.display = 'none';
         }else {
-            console.log('You lost! scissors beat paper!');
             roundsWon('computer');
-
+            resultCenter.style.display = 'none';
         }
     }else if(playerSelection==='scissors') {
         if(ComputerSelection==='scissors') {
-            console.log('DRAW');
+            resultCenter.style.display = 'flex';
         }else if(ComputerSelection==='rock'){
-            console.log('You lost! Rock beats scissors!');
             roundsWon('computer');
-
+            resultCenter.style.display = 'none';
         }else {
-            console.log('You won! Scissors beat paper!');
             roundsWon('user');
-
+            resultCenter.style.display = 'none';
         }
     }
 }
@@ -122,18 +122,8 @@ function getComputerChoice() {
 
 }
 
-
-
-function game() {
-    
-    roundsWon();
-     let ComputerSelection = getComputerChoice();
-
-    playRound(playerSelection,ComputerSelection);
-}
-
-let msgWinnerPlayer = "PLAYER WON: ";
-let msgWinnerComputer = "COMPUTER WON: ";
+let msgWinnerPlayer = "PLAYER WON: \n";
+let msgWinnerComputer = "COMPUTER WON: \n";
 let winnerText = document.querySelector(".winnerText");
 let winnerPlaceHolder = "Winner is: "; 
 
@@ -142,24 +132,26 @@ let playNew = function() {
     let playAgainButton = document.createElement('div');
     playAgainButton.style.display = "flex";
     playAgainButton.style.justifyContent = "center";
+    playAgainButton.style.alignItems = "center";
     playAgainButton.style.cursor = "pointer";
 
     playAgainButton.textContent = "PLAY AGAIN?";
     playAgainButton.style.width = "400px";
     playAgainButton.style.height = "200px";
-    playAgainButton.style.backgroundColor = "red";
-
+    playAgainButton.style.backgroundColor = "rgba(0,0,0,0.4)";
     buttons.style.display = 'none';
     result.style.display = 'none';
     content.append(playAgainButton);
 
+    
     playAgainButton.addEventListener('click', ()=> {
         playAgainButton.remove();
         buttons.style.display = 'flex';
         result.style.display = 'flex';
         userRoundWon = 0;
         computerRoundWon = 0;
-        winnerText.textContent = winnerPlaceHolder;
+        winner = null;
+        removeWinner();
     
 
     }, {
@@ -167,44 +159,52 @@ let playNew = function() {
     });
 }
 function roundsWon(winner) {
-    if(userRoundWon===5 || computerRoundWon===5) {
+
+    if(winner===undefined) {
+        playRound();
+        
+    }
+
+    if(winner==='user') {
+        userRoundWon++;
+        resultLeft.textContent = msgWinnerPlayer+userRoundWon;
+    }else if(winner==='computer'){
+        computerRoundWon++;
+        resultRight.textContent = msgWinnerComputer+computerRoundWon;
+    }
+
+     if(userRoundWon===5 || computerRoundWon===5) {
         playNew();
         resultLeft.textContent = msgWinnerPlayer;
         resultRight.textContent = msgWinnerComputer;
-
+        
         let winnerDiv = document.querySelector('.winner');
         let whoWon = document.createElement('h1'); 
-        winnerDiv.append(whoWon);
-
-
         
 
         if(userRoundWon==5) {
             winner = 'user';
             whoWon.textContent = winnerPlaceHolder +"player";
-            
-            
+            winnerDiv.style.display = 'flex';
+
 
         } else if(computerRoundWon == 5) {
             winner ='computer';
             whoWon.textContent = winnerPlaceHolder +"computer";
+            winnerDiv.style.display = 'flex';
             
 
         }
+        winnerDiv.append(whoWon);
         return true;
         
-    }else {
-    if(winner==='user') {
-        ++userRoundWon;
-        resultLeft.textContent = msgWinnerPlayer+userRoundWon;
-        console.log('user won '+userRoundWon);
-    }else if(winner==='computer'){
-        ++computerRoundWon;
-        resultRight.textContent = msgWinnerComputer+computerRoundWon;
-
-        console.log('computer won '+computerRoundWon);
-    }else {
-        console.log('draw');
     }
+    
 }
+let removeWinner = function() {
+    let winnerDiv = document.querySelector('.winner');
+    let whoWon = document.querySelector('.winner>h1');
+
+    winnerDiv.style.display = 'none';
+    whoWon.remove();
 }
